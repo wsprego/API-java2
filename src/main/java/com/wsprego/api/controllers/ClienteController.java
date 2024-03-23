@@ -1,29 +1,36 @@
 package com.wsprego.api.controllers;
 
-import com.wsprego.api.model.Cliente;
+import com.wsprego.api.domain.model.Cliente;
+import com.wsprego.api.domain.repository.ClienteRepository;
+import jakarta.persistence.PersistenceContext;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Arrays;
 import java.util.List;
 
+@AllArgsConstructor
 @RestController
 public class ClienteController {
+
+    private final ClienteRepository clienteRepository;
+
+    //listar todos os clientes
     @GetMapping("/clientes")
     public List<Cliente> listar(){
-        var cliente1 = new Cliente();
-        cliente1.setId(1L);
-        cliente1.setNome("João");
-        cliente1.setTelefone("74 9999-8888");
-        cliente1.setEmail("joão@gmail");
+        return clienteRepository.findAll();
+    }
 
-        var cliente2 = new Cliente();
-        cliente2.setId(2L);
-        cliente2.setNome("Maria Clara");
-        cliente2.setTelefone("74 8888-7777");
-        cliente2.setEmail("maria@gmail");
+    //listar por clientes com esse nome exato
+    @GetMapping("/clientes/nome")
+    public List<Cliente> listarNome(){
+        return clienteRepository.findByNome("João");
+    }
 
-        return Arrays.asList(cliente1,cliente2);
+    //listar por clientes contedo esse nome
+    @GetMapping("/clientes/contendo")
+    public List<Cliente> listarNomeContendo(){
+        return clienteRepository.findByNomeContaining("Jo");
     }
 
 }
