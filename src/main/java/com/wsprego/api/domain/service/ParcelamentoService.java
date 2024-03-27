@@ -26,7 +26,7 @@ public class ParcelamentoService {
         }
 
         Cliente cliente = cadastroClienteService.buscar(novoParcelamento.getCliente().getId());
-        
+
         novoParcelamento.setCliente(cliente);
         novoParcelamento.setDataCriacao(LocalDateTime.now());
 
